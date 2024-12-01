@@ -34,12 +34,20 @@ security:
             stateless: true
             jwt: ~
 
+    role_hierarchy:
+        ROLE_ADMIN:       ROLE_USER
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
         - { path: ^/api/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/api/recipes/create, roles: ROLE_ADMIN }
+        - { path: ^/api/recipes/update, roles: ROLE_ADMIN }
+        - { path: ^/api/recipes/delete, roles: ROLE_ADMIN }
+        - { path: ^/api/recipes, roles: ROLE_USER }
+    
+
 when@test:
     security:
         password_hashers:
