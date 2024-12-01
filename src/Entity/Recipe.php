@@ -124,5 +124,15 @@ class Recipe
         return $this;
     }
 
+    public function updateRecipeIngredient(RecipeIngredient $recipeIngredient): static
+    {
+        if ($this->recipeIngredients->contains($recipeIngredient)) {
+            $this->recipeIngredients->removeElement($recipeIngredient);
+            $this->recipeIngredients->add($recipeIngredient);
+        }
+
+        return $this;
+    }
+
     
 }

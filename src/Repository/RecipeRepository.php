@@ -16,6 +16,15 @@ class RecipeRepository extends ServiceEntityRepository
         parent::__construct($registry, Recipe::class);
     }
 
+    public function getFilteredRecipeByIngredientsName(string $ingredientName): array
+    {
+        $qb = $this->createQueryBuilder('r');
+        $qb->join('r.recipeIngredients', 'ri')
+            ->join('ri.ingredient', 'i')
+            ->where('i.name = :ingredientName')
+            ->setParameter('ingredientName', $ingredientName);
+        return $qb->getQuery()->getResult();
+    }
     //    /**
     //     * @return Recipe[] Returns an array of Recipe objects
     //     */
