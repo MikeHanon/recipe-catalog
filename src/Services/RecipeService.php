@@ -105,7 +105,7 @@ Class RecipeService
     {
         $ingredients = [];
         foreach ($recipeIngredients as $ingredient) {
-            $ingredients['ingredients'][] = [
+            $ingredients[] = [
                 'id' => $ingredient->getIngredient()->getId(),
                 'name' => $ingredient->getIngredient()->getName(),
                 'quantity' => $ingredient->getQuantity(),
