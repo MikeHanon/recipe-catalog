@@ -91,6 +91,7 @@ Class RecipeService
     private function getRecipeData(Recipe $recipe): array
     {
         $recipeData = [
+            'id' => $recipe->getId(),
             'name' => $recipe->getName(),
             'instructions' => $recipe->getInstructions(),
             'ingredients' => $this->getIngredients($recipe->getRecipeIngredients()),
@@ -105,6 +106,7 @@ Class RecipeService
         $ingredients = [];
         foreach ($recipeIngredients as $ingredient) {
             $ingredients['ingredients'][] = [
+                'id' => $ingredient->getIngredient()->getId(),
                 'name' => $ingredient->getIngredient()->getName(),
                 'quantity' => $ingredient->getQuantity(),
                 'unit' => $ingredient->getUnit(),
@@ -125,7 +127,7 @@ Class RecipeService
             $methodName = 'set'.ucfirst($index);
             
             if (!method_exists($recipe, $methodName)) {
-                dd($methodName, $recipe);
+                
                 throw new RecipeException('Invalid method: set'.$index);
             }
             $recipe->$methodName($data);

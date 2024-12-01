@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Services\TokenService;
 use App\Services\UserService;
+use PHPUnit\Util\Json;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,6 +18,7 @@ class ApiLoginController extends AbstractController
     {
         $userData = json_decode($request->getContent(), true);
         $user = $userService->authenticateUser($userData);
+        
         if (null === $user) {
             return $this->json([
                 'message' => 'missing credentitial',
