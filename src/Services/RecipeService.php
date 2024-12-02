@@ -41,7 +41,7 @@ Class RecipeService
         return $recipesList;
     }
 
-    public function createRecipe(array $recipeData): void
+    public function createRecipe(array $recipeData): Recipe
     {
         $recipe = new Recipe();
         $recipe->setName($recipeData['name']);
@@ -65,6 +65,7 @@ Class RecipeService
         
         $this->em->persist($recipe);
         $this->em->flush();
+        return $recipe;
     }
 
     public function getRecipeToArray(int $id): array
@@ -141,9 +142,13 @@ Class RecipeService
     {
         if (isset($ingredients['add'])) {
             $this->addRecipeIngredients($recipe, $ingredients['add']);
-        } elseif (isset($ingredients['update'])) {
+        } 
+        
+        if (isset($ingredients['update'])) {
             $this->updateRecipeingredients($recipe, $ingredients['update']);
-        } elseif (isset($ingredients['delete'])) {
+        } 
+        
+        if (isset($ingredients['delete'])) {
             $this->deleteRecipeIngredients($recipe, $ingredients['delete']);
         }
 
@@ -187,9 +192,9 @@ Class RecipeService
 
     private function updateIngredient(Recipe $recipe, array $ingredientData): RecipeIngredient
     {
-        $ingredient = $this->ingredientsRepository->find($ingredientData['id']);
+        $ingredient = $this->ingredientsRepository->find($ingredientData['ingredient']);
         if (!$ingredient) {
-            throw new RecipeException('Ingredient not found with id: '.$ingredientData['id']);
+            throw new RecipeException('Ingredient not found with id: '.$ingredientData['ingredient']);
         }
         $recipeIngredient = $this->recipeIngredientRepository->findOneBy(['recipe' => $recipe, 'ingredient' => $ingredient]);
         if (!$recipeIngredient) {

@@ -53,7 +53,7 @@ class RecipeController extends AbstractController
         try {
             $this->jsonRecipeValidator->validateRecipeData($requestData);
             $requestData['user'] = $this->getUser();
-            $this->recipeService->createRecipe($requestData);
+            $recipe = $this->recipeService->createRecipe($requestData);
 
         } catch (RecipeException $e) {
             return new JsonResponse(['message' => $e->getMessage()], Response::HTTP_BAD_REQUEST);
@@ -61,7 +61,7 @@ class RecipeController extends AbstractController
             return new JsonResponse(['message' => $e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
-        return new JsonResponse(['message' => 'recipe created'], Response::HTTP_CREATED);
+        return new JsonResponse(['message' => 'recipe created', 'recipe_id' => $recipe->getId()], Response::HTTP_CREATED);
     }
 
     #[Route('/api/recipes/{id}', name: 'app_recipes_get', methods: ['GET'])]
