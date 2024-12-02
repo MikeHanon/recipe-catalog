@@ -17,7 +17,7 @@ class IngredientsController extends AbstractController
     }
 
 
-    #[Route('/ingredients', name: 'app_ingredients', methods: ['GET'])]
+    #[Route('/api/ingredients', name: 'app_ingredients', methods: ['GET'])]
     public function getIngredients(): JsonResponse
     {
         $ingredients = $this->ingredientsService->getIngredientsList();
